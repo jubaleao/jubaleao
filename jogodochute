@@ -1,0 +1,89 @@
+# JOGO DO CHUTE
+import random, os, time
+
+def linha():
+    print('=================================')
+
+def titulo():
+    print(colors.branco+'------------BEM-VINDO AO JOGO------------'+colors.end)
+
+def limpar_terminal():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def geradoraleatorio():
+    print(colors.yellow + 'Gerando um número aleatório...' + colors.end)
+    x = random.randint(1,100)
+    return x
+
+class colors:
+    verde = '\033[92m'
+    ciano = '\033[1;36m'
+    branco = '\033[1;97m'
+    end = '\033[0m'
+    red = '\033[91m'
+    yellow = '\033[33m'
+    roxo='\033[1;35m'
+
+def finalizar_programa():
+    print(colors.branco + 'Obrigado por jogar!' + colors.end)
+    time.sleep(0.3)
+    print(colors.red + 'Finalizando programa...' + colors.end)
+    exit()
+
+def jogo(numero, tentativas):    
+    while True:
+        try:
+            chute = int(input(colors.roxo + 'Qual número foi gerado? ' + colors.end))
+            if chute > 100 or chute < 1:
+                time.sleep(0.75)
+                print(colors.red + 'Digite um número entre 1 e 100' + colors.end)
+                time.sleep(0.1)
+            elif chute > numero:
+                time.sleep(0.75)
+                tentativas+=1
+                print(f'Chute um número {colors.ciano}menor!'+ colors.end)
+                time.sleep(0.1)
+            elif chute < numero:
+                time.sleep(0.75)
+                tentativas+=1
+                print(f'Chute um número {colors.ciano}maior!'+ colors.end)
+                time.sleep(0.1)
+            elif chute==numero:
+                time.sleep(0.75)
+                tentativas+=1
+                linha()
+                print(colors.verde + f'Parabéns! Você acertou! O valor gerado foi: {numero}' + colors.end)
+                print(colors.branco + f'Seu número total de chutes foi: {tentativas}' + colors.end)
+                linha()
+                time.sleep(0.75)
+                tentativas=0
+                dnv=input('Deseja jogar novamente? (S/N) ')
+                if dnv.lower()=='s' or dnv.lower()=='sim':
+                    time.sleep(0.75)
+                    print(colors.branco + 'Reiniciando o jogo...' + colors.end)
+                    time.sleep(1)
+                    limpar_terminal()
+                    # print(colors.yellow + 'Gerando um novo número aleatório...' + colors.end)
+                    numero = random.randint(1,100)
+                    continue
+                elif dnv.lower()=='n' or dnv.lower()=='não':
+                    time.sleep(0.75)
+                    limpar_terminal()
+                    finalizar_programa()
+                else:
+                    time.sleep(0.5)
+                    print(colors.red + 'Resposta inválida. Responda S para sim ou N para não' + colors.end)
+        except ValueError:
+            time.sleep(0.7)
+            print(colors.red + 'Insira um número inteiro' + colors.end)
+
+limpar_terminal()
+
+comeco=input('Pressione ENTER para começar...')
+
+
+numero = geradoraleatorio()
+tentativas = 0
+time.sleep(0.5)
+
+jogo(numero, tentativas)
